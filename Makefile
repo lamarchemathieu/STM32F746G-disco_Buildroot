@@ -17,8 +17,11 @@ bootstrap:
 
 build:
 	make -j10 -C $(dir_buildroot)
-	cp $(dir_buildroot)/output/images/stm32f746-disco.dtb ${dir_publish}/
+	cp $(dir_buildroot)/output/images/my-stm32f746-disco.dtb ${dir_publish}/
 	cp $(dir_buildroot)/output/images/zImage ${dir_publish}/
+	truncate -s 1M $(dir_buildroot)/output/images/bootloader.bin
+	dd if=$(dir_buildroot)/output/images/u-boot-spl.bin of=$(dir_buildroot)/output/images/bootloader.bin conv=notrunc
+	dd if=$(dir_buildroot)/output/images/u-boot.bin of=$(dir_buildroot)/output/images/bootloader.bin conv=notrunc bs=1K seek=32
 
 flash_bootloader:
 	cd $(dir_buildroot)/output/build/host-openocd-0.10.0/tcl && ../../../host/usr/bin/openocd \
