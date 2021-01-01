@@ -17,7 +17,7 @@ bootstrap:
 
 build:
 	make -j10 -C $(dir_buildroot)
-	cp $(dir_buildroot)/output/images/my-stm32f746-disco.dtb ${dir_publish}/
+	cp $(dir_buildroot)/output/images/my-stm32f746-disco.dtb ${dir_publish}/stm32f746-disco.dtb
 	cp $(dir_buildroot)/output/images/zImage ${dir_publish}/
 	truncate -s 1M $(dir_buildroot)/output/images/bootloader.bin
 	dd if=$(dir_buildroot)/output/images/u-boot-spl.bin of=$(dir_buildroot)/output/images/bootloader.bin conv=notrunc
